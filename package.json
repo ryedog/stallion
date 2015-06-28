@@ -1,0 +1,23 @@
+{
+  "name": "stallion",
+  "version": "1.0.0",
+  "description": "Simple way to create clients for your REST based services",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ryedog/stallion.git"
+  },
+  "keywords": [
+    "rest",
+    "client"
+  ],
+  "author": "Ryan Hubbard <ryanmhubbard@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryedog/stallion/issues"
+  },
+  "homepage": "https://github.com/ryedog/stallion#readme"
+}
