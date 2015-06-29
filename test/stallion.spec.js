@@ -1,6 +1,7 @@
 "use strict";
 
 var Stallion = require('../lib/stallion.js');
+var Request = require('./request.js');
 
 
 describe('Instantiate a service', function(){
@@ -12,11 +13,11 @@ describe('Instantiate a service', function(){
   var config = {
     baseUrl: 'https://my.api.com',
     objects: {
-      'User': 'crud',
-      'Company': 'r',
-      'Task': {
+      User: 'crud',
+      Company: 'r',
+      Task: {
         actions: 'cru',
-
+        finish: function() {}
       }
     }
   }
@@ -26,10 +27,10 @@ describe('Instantiate a service', function(){
     api = new service(user, pass);
 
     // Stub out Restlers get, post, put, delete calls
-    sinon.stub(api, 'get').returns()
-    sinon.stub(api, 'put').returns()
-    sinon.stub(api, 'post').returns()
-    sinon.stub(api, 'del').returns()
+    sinon.stub(api, 'get').returns( new Request('success') );
+    sinon.stub(api, 'put').returns();
+    sinon.stub(api, 'post').returns( new Request('error') );
+    sinon.stub(api, 'del').returns();
   });
 
 
@@ -41,6 +42,23 @@ describe('Instantiate a service', function(){
     api.defaults.username.should.eq(user);
     api.defaults.password.should.eq(pass);
   });
+
+  it('Creates custom functions on the service', function() {
+    api.should.respondTo('finishTask');
+  });
+
+  it('Returns a promise for added methods', function() {
+    api.getUser().should.be.instanceof(Promise);
+  });
+
+  it('On success fulfills the request', function() {
+    return api.getTask().should.be.fulfilled;
+  });
+
+  it('On error rejects the request', function() {
+    return api.createUser().should.be.rejected;
+  });
+
 
   describe('When using object shortcut declaration', function() {
 
@@ -63,7 +81,6 @@ describe('Instantiate a service', function(){
   });
 
   describe('When using full object declaration', function() {
-
     it('Creates the CRUD methods properly', function() {
       api.should.respondTo('createTask');
       api.should.respondTo('updateTask');
@@ -71,10 +88,7 @@ describe('Instantiate a service', function(){
       api.should.respondTo('getTask');
       api.should.respondTo('getTasks');
     });
-
   });
-
-
 
   describe('When calling', function(){
     var id = 123;
