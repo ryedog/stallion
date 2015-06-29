@@ -13,11 +13,13 @@ describe('Instantiate a service', function(){
   var config = {
     baseUrl: 'https://my.api.com',
     objects: {
-      User: 'crud',
+      User: 'crudp',
       Company: 'r',
       Task: {
         actions: 'cru',
-        finish: function() {}
+        finish: function() {
+          this.post('tasks/finish');
+        }
       }
     }
   }
@@ -30,6 +32,7 @@ describe('Instantiate a service', function(){
     sinon.stub(api, 'get').returns( new Request('success') );
     sinon.stub(api, 'put').returns();
     sinon.stub(api, 'post').returns( new Request('error') );
+    sinon.stub(api, 'patch').returns();
     sinon.stub(api, 'del').returns();
   });
 
@@ -65,6 +68,7 @@ describe('Instantiate a service', function(){
     it('Creates all CRUD methods from shortcut declaration is "crud"', function() {
       api.should.respondTo('createUser');
       api.should.respondTo('updateUser');
+      api.should.respondTo('patchUser');
       api.should.respondTo('deleteUser');
       api.should.respondTo('getUser');
       api.should.respondTo('getUsers');
@@ -92,7 +96,7 @@ describe('Instantiate a service', function(){
 
   describe('When calling', function(){
     var id = 123;
-    var data = {name: 'XYZ'};
+    var data = {id: 123, name: 'XYZ'};
     var payload;
 
     before(function() {
@@ -107,14 +111,26 @@ describe('Instantiate a service', function(){
     });
 
 
+    describe('updateUser', function() {
+      it('calls Restlers put method with /user/:id as the resource', function() {
+        api.updateUser(data);
+        api.put.should.have.been.calledWith('users/' + id);
+      });
+    });
+
+    describe('patchUser', function() {
+      it('calls Restlers patch method with /user/:id as the resource', function() {
+        api.patchUser(data);
+        api.patch.should.have.been.calledWith('users/' + id);
+      });
+    });
+
     describe('deleteUser with an id', function() {
       it('calls Restlers del method with /user/:id as the resource', function() {
         api.deleteUser(id);
         api.del.should.have.been.calledWith('users/' + id);
       });
     });
-
-
     describe('getUser with an id', function() {
       it('calls Restlers get method with /user/:id as the resource', function() {
         api.getUser(id);
@@ -139,6 +155,15 @@ describe('Instantiate a service', function(){
         api.get.should.have.been.calledWith('users', payload);
       });
     });
+
+
+    describe('a custom function, say finishTask', function() {
+      it('calls Restlers post method withe the resource /tasks/finish', function() {
+        api.finishTask();
+        api.post.should.have.been.calledWith('tasks/finish');
+      });
+    });
+
 
   });
 
