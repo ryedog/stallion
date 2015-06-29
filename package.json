@@ -8,16 +8,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ryedog/stallion.git"
+    "url": "https://github.com/ryedog/stallion.git"
   },
   "keywords": [
     "rest",
-    "client"
+    "client",
+    "api"
   ],
   "author": "Ryan Hubbard <ryanmhubbard@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ryedog/stallion/issues"
   },
-  "homepage": "https://github.com/ryedog/stallion#readme"
+  "homepage": "https://github.com/ryedog/stallion#readme",
+  "dependencies": {
+    "pluralize": "^1.1.2",
+    "restler": "^3.2.2"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "chai-as-promised": "^5.1.0",
+    "mocha": ">= 2.2.1",
+    "replay": "^2.0.6",
+    "sinon": "^1.15.1",
+    "sinon-chai": "^2.8.0"
+  }
 }
