@@ -1,6 +1,6 @@
 {
   "name": "stallion",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple way to create clients for your REST based services",
   "main": "index.js",
   "scripts": {

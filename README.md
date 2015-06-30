@@ -1,12 +1,28 @@
-# Stallion
-Simple way to create clients for your REST services in node.
+# Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]
+Simple way to create clients for REST services in node.
+
+Stallion is written in iojs native es6 with the following flags (project this is for is in iojs)
+* `--es_staging`
+* `--harmony_arrow_functions`
+
+Planning to throw in a build process to transpile to ES5. Bare with me, wrote this in just a couple of hours.
+
+Would love some feedback, including how to make the README better. Just drop me a line or a PR.
+
 
 Licensed under the MIT-LICENSE
 
-# Installing
+## Readme Todos
+1. How authorization works
+2. Everything is promise based
+3. Get,Delete & Query strings
+
+
+
+## Installing
 `npm install stallion --save`
 
-# Creating a client
+## Creating a client
 
 Creating a client is simple. Just delcare the objects
 
@@ -48,14 +64,14 @@ This will create the following methods for Task on the service:
 Stallion builds in the common calls REST services for resources: Create, Read, Update (both Put & Patch), and Delete and makes it really easy for you to add them in 2 ways using the objects option in the config:
 
 * Shortcut declaration
-```JSON
+```javascript
 {
   User: 'crud'
 }
 ```
 
 * Using the `action` property on the object description
-```JSON
+```javascript
 {
   User: {
     actions: 'crud'
@@ -77,7 +93,7 @@ There are 5 actions that are available:
 ## Custom methods
 You can add custom methods to an object by simply adding the function to the objects definition.
 
-```JSON
+```javascript
 {
   Lead: {
     convert: function(id) {
@@ -88,3 +104,13 @@ You can add custom methods to an object by simply adding the function to the obj
 ```
 
 This will create a `convertLead(id)` method on the service. The provided function will be called in the context of a [Restler](https://github.com/danwrong/restler) client, so you can use any method available that Rester exposes.
+
+## Todos / Thoughts / Comments
+1. Add verion (specify header value)
+2. Custom function for mapping from Action to HTTP calls
+3. Paging
+4. Additional authorization options
+5. Before / After hooks
+6. ES5 version using Babel
+7. Exposing array of api methods
+8. Shorthand for custom actions
