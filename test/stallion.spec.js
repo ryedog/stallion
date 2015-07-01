@@ -17,8 +17,8 @@ describe('Instantiate a service', function(){
       Company: 'r',
       Task: {
         actions: 'cru',
-        finish: function() {
-          this.post('tasks/finish');
+        finish: function(id) {
+          return this.post('tasks/finish');
         }
       }
     }
@@ -167,9 +167,21 @@ describe('Instantiate a service', function(){
 
 
     describe('a custom function, say finishTask', function() {
+      var promise;
+      before(function() {
+        promise = client.finishTask(1,2,3);
+      });
+
       it('calls Restlers post method withe the resource /tasks/finish', function() {
-        client.finishTask();
         client.post.should.have.been.calledWith('tasks/finish');
+      });
+
+      it('returns a promise', function() {
+        promise.should.be.instanceof(Promise);
+      });
+
+      it('and that promise resolves', function() {
+        promise.should.be.fulfilled;
       });
     });
 

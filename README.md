@@ -1,4 +1,4 @@
-# Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]
+# Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]()
 Simple way to create clients for REST services in node.
 
 Stallion is written in iojs native es6 with the following flags (project this is for is in iojs)
@@ -16,6 +16,7 @@ Licensed under the MIT-LICENSE
 1. How authorization works
 2. Everything is promise based
 3. Get,Delete & Query strings
+4. Customer functions & resolving
 
 
 
@@ -114,3 +115,5 @@ This will create a `convertLead(id)` method on the service. The provided functio
 6. ES5 version using Babel
 7. Exposing array of api methods
 8. Shorthand for custom actions
+9. Expose request & response objects
+10. Add option to create 'client.createResource' vs 'client.resource.create'
