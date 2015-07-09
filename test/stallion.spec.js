@@ -13,7 +13,7 @@ describe('Instantiate a service', function(){
   var config = {
     baseUrl: 'https://my.client.com',
     objects: {
-      User: 'crudp',
+      User: 'crudlp',
       Company: 'r',
       Task: {
         actions: 'cru',
@@ -64,7 +64,7 @@ describe('Instantiate a service', function(){
   });
 
   it('Set the api methods on the service', function() {
-    service.api.should.have.length(13);
+    service.api.should.have.length(11);
   });
 
   it('Set the available resources on the service', function() {
@@ -74,7 +74,7 @@ describe('Instantiate a service', function(){
 
   describe('When using object shortcut declaration', function() {
 
-    it('Creates all CRUD methods from shortcut declaration is "crud"', function() {
+    it('Creates all CRUD methods when shortcut declaration is "crudpl"', function() {
       client.should.respondTo('createUser');
       client.should.respondTo('updateUser');
       client.should.respondTo('patchUser');
@@ -88,7 +88,7 @@ describe('Instantiate a service', function(){
       client.should.not.respondTo('updateCompany');
       client.should.not.respondTo('deleteCompany');
       client.should.respondTo('getCompany');
-      client.should.respondTo('getCompanies');
+      client.should.not.respondTo('getCompanies');
     });
 
   });
@@ -99,7 +99,7 @@ describe('Instantiate a service', function(){
       client.should.respondTo('updateTask');
       client.should.not.respondTo('deleteTask');
       client.should.respondTo('getTask');
-      client.should.respondTo('getTasks');
+      client.should.not.respondTo('getTasks');
     });
   });
 
