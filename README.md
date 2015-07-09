@@ -117,7 +117,3 @@ This will create a `convertLead(id)` method on the service. The provided functio
 8. Shorthand for custom actions
 9. Expose request & response objects
 10. Add option to create 'client.createResource' vs 'client.resource.create'
-11. Add gets users by company
-12. Add remove company from user
-13. Add add company to user
-14. Add tags to users & companies (tagUser, tagCompany [singular & plural])
