@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * Simulates a Restler request for testing
@@ -23,8 +23,10 @@ class Request {
    * @param  {Callback} The listender
    */
   on(event, listener) {
-    if ( this.event == event )
+    if ( this.event === event )
       listener.call();
+
+    return this;
   }
 }
 

@@ -1,11 +1,10 @@
-"use strict";
+'use strict';
 
 // TODO: option for service.object.action instad of service.actionObject
 // TODO: pluralize vs singular?
-var l = console.log;
+// var l = console.log;
 var restler = require('restler');
 var pluralize = require('pluralize');
-
 
 var shorthandMap = {
   c: 'create',
@@ -13,7 +12,7 @@ var shorthandMap = {
   u: 'update',
   p: 'patch',
   d: 'delete',
-  l: 'list',
+  l: 'list'
 };
 
 var actionsMap = {
@@ -23,7 +22,7 @@ var actionsMap = {
   patch: 'patch',
   list: 'get',
   delete: 'del'
-}
+};
 
 
 class Stallion {
@@ -38,14 +37,14 @@ class Stallion {
 
     // Configure Restler
     var restler_config = {
-      baseURL : config.baseUrl
+      baseURL: config.baseUrl
     };
 
     // Create the restler API
     var api = this.buildApi(config);
 
     var service = restler.service(default_init, restler_config, api);
-        service.api = Object.keys(api)
+        service.api = Object.keys(api);
         service.resources = this.objectsToResources(config);
     // TODO: this right
         //service.resources = objects.map(x => { return x.toLowerCase() });
@@ -85,15 +84,15 @@ class Stallion {
       let obj = objs[name];
 
       // Handle Single line definitions. ex: { User: 'crud' }
-      if ( typeof(obj) == 'string' )
-        obj = { actions: obj }
+      if ( typeof obj === 'string' )
+        obj = { actions: obj };
 
       // #es6 Object.assign
       extend(api, this.expandShorthand(name, obj.actions));
 
       // Handle custom actions
       for (var action in obj )
-        if ( action != 'actions' )
+        if ( action !== 'actions' )
           api[action + name] = this.customActionToMethod(obj[action]);
 
     }
@@ -113,11 +112,11 @@ class Stallion {
 
     for (let key in shorthandMap )
       if ( actions.indexOf(key) >= 0 ) {
-        var action = shorthandMap[key]
+        var action = shorthandMap[key];
         var method = action + name;
         var resource = pluralize(name.toLowerCase());
 
-        if ( action == 'list' )
+        if ( action === 'list' )
           api['get' + pluralize(name)] = this.actionToMethod(resource, action);
         else
           api[method] = this.actionToMethod(resource, action);
@@ -138,12 +137,11 @@ class Stallion {
    */
   customActionToMethod(callback) {
 
-    return () => {
+    return function() {
       var self = this;
       var args = arguments;
 
       return new Promise((resolve, reject) => {
-
         callback.apply(self, args)
           .on('success', resolve)
           .on('fail', reject)
@@ -162,21 +160,26 @@ class Stallion {
     var verb = actionsMap[action];
 
 
-    return (data, options) => {
+    // Don't use an arrow here
+    // This function is called in a differenct context
+    // So the self below will be the wrong self
+    return function(data, options) {
       var id;
       var route = resource;
 
       // #es6 default params
       options = options || {};
 
-      if ( can_have_id(action) )
-        if ( id = get_id(data) )
+      if ( can_have_id(action) ) {
+        id = get_id(data);
+        if ( id )
           route += '/' + id;
         else
-          options['query'] = data;
+          options.query = data;
+      }
 
       else
-        options['data'] = JSON.stringify(data)
+        options.data = JSON.stringify(data);
 
 
       // TODO: can we DRY this up with customActionToMethod w/o making unreadable code?
@@ -186,13 +189,13 @@ class Stallion {
 
         //l('Calling:', data, verb, route, options);
 
-        var request = self[verb].call(self, route, options)
+        self[verb].call(self, route, options)
            .on('success', resolve)
            .on('fail', reject)
            .on('error', reject);
       });
 
-    }
+    };
   }
 
 }
@@ -231,10 +234,10 @@ function can_have_id(action) {
  * @return {Boolean}     TRUE if value can be inserted into the endpoint
  */
 function get_id(val) {
-  if ( typeof(val) == 'string' || typeof(val) == 'number' )
+  if ( typeof val === 'string' || typeof val === 'number' )
     return val;
 
-  if ( typeof(val) == 'object' && val.id )
+  if ( typeof val === 'object' && val.id )
     return val.id;
 
   return false;
@@ -251,7 +254,7 @@ function default_init(user, password) {
 
   this.defaults.headers = {
     Accept: 'application/json'
-  }
+  };
   this.defaults.headers['Content-Type'] = 'application/json';
 }
 

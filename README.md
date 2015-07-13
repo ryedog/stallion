@@ -1,13 +1,7 @@
 # Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]()
-Simple way to create clients for REST services in node.
+> Simple, lightweight way to create Node clients for REST services
 
-Stallion is written in iojs native es6 with the following flags (project this is for is in iojs)
-* `--es_staging`
-* `--harmony_arrow_functions`
-
-Planning to throw in a build process to transpile to ES5. Bare with me, wrote this in just a couple of hours.
-
-Would love some feedback, including how to make the README better. Just drop me a line or a PR.
+Would love some feedback, including how to make the README better. Drop me an email, or create an issue or PR.
 
 
 Licensed under the MIT-LICENSE
@@ -82,14 +76,12 @@ Stallion builds in the common calls REST services for resources: Create, Read, U
 
 There are 5 actions that are available:
 
-* `c` Create: adds a `create<Object>(data)` method which POST's the param to /:objects
-* `r` Read: adds 2 following methods
-  - `get<Object>(id)` method which GET's to /:objects/:id
-  - `get<Objects>(data)` method which GET's to /:objects but add the params to the query string
-- `u` Update: adds `update<Object>(data)` method which PUT's the param to the service /:objects/:data.id
-- `p` Patch: adds `patch<Object>(data)` method which PATCH's the param to the service /:objects/:data.id
-- `d` Delete: adds `delete<Object>(id)` method which DELETE's to /:objects/:id
-
+* `c` Create: adds a `create<Object>(data)` method which POST's the data to /:objects
+* `r` Read: adds a `get<Object>(id)` method which GET's to /:objects/:id
+* `u` Update: adds `update<Object>(data)` method which PUT's the param to the service /:objects/:data.id
+* `p` Patch: adds `patch<Object>(data)` method which PATCH's the param to the service /:objects/:data.id
+* `d` Delete: adds `delete<Object>(id)` method which DELETE's to /:objects/:id
+* 'l' List: adds a `get<Objects>(query)` method (notice it's plural) which GET's to /:objects but the query object will be translated to a query string
 
 ## Custom methods
 You can add custom methods to an object by simply adding the function to the objects definition.
@@ -112,12 +104,7 @@ This will create a `convertLead(id)` method on the service. The provided functio
 3. Paging
 4. Additional authorization options
 5. Before / After hooks
-6. ES5 version using Babel
-7. Exposing array of api methods
-8. Shorthand for custom actions
+6. Exposing array of api methods
+7. Shorthand for custom actions
 9. Expose request & response objects
 10. Add option to create 'client.createResource' vs 'client.resource.create'
-11. Add gets users by company
-12. Add remove company from user
-13. Add add company to user
-14. Add tags to users & companies (tagUser, tagCompany [singular & plural])

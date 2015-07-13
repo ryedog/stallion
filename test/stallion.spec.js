@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-var Stallion = require('../lib/stallion.js');
-var Request = require('./request.js');
+var Stallion = require('../lib/stallion.js')
+  , Request  = require('./request.js');
 
 
 describe('Instantiate a service', function(){
 
   var client;
-  var service;
+  var Service;
   var user = 'my_username';
   var pass = 'my_password';
   var config = {
@@ -17,21 +17,21 @@ describe('Instantiate a service', function(){
       Company: 'r',
       Task: {
         actions: 'cru',
-        finish: function(id) {
-          return this.post('tasks/finish');
+        finish: function() {
+          return this.put('tasks/finish');
         }
       }
     }
-  }
+  };
 
 
   before(function() {
-    service = new Stallion(config);
-    client = new service(user, pass);
+    Service = new Stallion(config);
+    client = new Service(user, pass);
 
     // Stub out Restlers get, post, put, delete calls
     sinon.stub(client, 'get').returns( new Request('success') );
-    sinon.stub(client, 'put').returns();
+    sinon.stub(client, 'put').returns( new Request('success') );
     sinon.stub(client, 'post').returns( new Request('error') );
     sinon.stub(client, 'patch').returns();
     sinon.stub(client, 'del').returns();
@@ -64,12 +64,12 @@ describe('Instantiate a service', function(){
   });
 
   it('Set the api methods on the service', function() {
-    service.api.should.have.length(11);
+    Service.api.should.have.length(11);
   });
 
   it('Set the available resources on the service', function() {
-    service.resources.should.have.length(3);
-    service.resources.should.include.members(['users', 'companies', 'tasks']);
+    Service.resources.should.have.length(3);
+    Service.resources.should.include.members(['users', 'companies', 'tasks']);
   });
 
   describe('When using object shortcut declaration', function() {
@@ -110,7 +110,7 @@ describe('Instantiate a service', function(){
 
     before(function() {
       payload = { data: JSON.stringify(data) };
-    })
+    });
 
     describe('createUser', function() {
       it('calls Restlers post method with the object', function() {
@@ -158,10 +158,10 @@ describe('Instantiate a service', function(){
 
     describe('getUsers with search params', function() {
       var search = { email: 'abc@gmail.com' };
-      var payload = { query: search };
+      var payload2 = { query: search };
       it('calls Restlers get method with query string params', function() {
         client.getUsers(search);
-        client.get.should.have.been.calledWith('users', payload);
+        client.get.should.have.been.calledWith('users', payload2);
       });
     });
 
@@ -169,11 +169,11 @@ describe('Instantiate a service', function(){
     describe('a custom function, say finishTask', function() {
       var promise;
       before(function() {
-        promise = client.finishTask(1,2,3);
+        promise = client.finishTask(1, 2, 3);
       });
 
-      it('calls Restlers post method withe the resource /tasks/finish', function() {
-        client.post.should.have.been.calledWith('tasks/finish');
+      it('calls Restlers put method with the resource /tasks/finish', function() {
+        client.put.should.have.been.calledWith('tasks/finish');
       });
 
       it('returns a promise', function() {
@@ -181,10 +181,9 @@ describe('Instantiate a service', function(){
       });
 
       it('and that promise resolves', function() {
-        promise.should.be.fulfilled;
+        return promise.should.be.fulfilled;
       });
     });
-
 
   });
 

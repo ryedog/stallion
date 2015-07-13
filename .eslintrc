@@ -1,0 +1,31 @@
+{
+
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+
+  "ecmaFeatures": {
+    "modules": true
+  },
+
+  "globals"   : {
+    "chai": false,
+    "sinon": false,
+    "Replay": false
+  },
+
+
+
+  "rules": {
+    "quotes": [2, "single", "avoid-escape"],
+    "no-multi-spaces": [1, { exceptions: {
+      "AssignmentExpression": true,
+      "VariableDeclarator": true
+    }}],
+    "curly": [2, "multi"],
+    "camelcase": 0,
+    "no-use-before-define": [2, "nofunc"]
+  }
+}
