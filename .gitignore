@@ -1,7 +1,14 @@
+# Node
 node_modules
+npm-debug.log
 
+# Build
+lib
+
+# OSX 
 .tmp
 .DS_Store
 
+# Sublime
 *.sublime-*
-sftp-config.json
+sftp-config.jsond
