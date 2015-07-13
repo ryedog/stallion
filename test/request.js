@@ -26,6 +26,7 @@ class Request {
     if ( this.event === event )
       listener.call();
 
+    return this;
   }
 }
 

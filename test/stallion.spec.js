@@ -1,7 +1,7 @@
 'use strict';
 
-var Stallion = require('../dist/stallion.js');
-var Request = require('./request.js');
+var Stallion = require('../lib/stallion.js')
+  , Request  = require('./request.js');
 
 
 describe('Instantiate a service', function(){
@@ -18,7 +18,7 @@ describe('Instantiate a service', function(){
       Task: {
         actions: 'cru',
         finish: function() {
-          return this.post('tasks/finish');
+          return this.put('tasks/finish');
         }
       }
     }
@@ -31,7 +31,7 @@ describe('Instantiate a service', function(){
 
     // Stub out Restlers get, post, put, delete calls
     sinon.stub(client, 'get').returns( new Request('success') );
-    sinon.stub(client, 'put').returns();
+    sinon.stub(client, 'put').returns( new Request('success') );
     sinon.stub(client, 'post').returns( new Request('error') );
     sinon.stub(client, 'patch').returns();
     sinon.stub(client, 'del').returns();
@@ -158,10 +158,10 @@ describe('Instantiate a service', function(){
 
     describe('getUsers with search params', function() {
       var search = { email: 'abc@gmail.com' };
-      payload = { query: search };
+      var payload2 = { query: search };
       it('calls Restlers get method with query string params', function() {
         client.getUsers(search);
-        client.get.should.have.been.calledWith('users', payload);
+        client.get.should.have.been.calledWith('users', payload2);
       });
     });
 
@@ -172,8 +172,8 @@ describe('Instantiate a service', function(){
         promise = client.finishTask(1, 2, 3);
       });
 
-      it('calls Restlers post method with the resource /tasks/finish', function() {
-        client.post.should.have.been.calledWith('tasks/finish');
+      it('calls Restlers put method with the resource /tasks/finish', function() {
+        client.put.should.have.been.calledWith('tasks/finish');
       });
 
       it('returns a promise', function() {
@@ -184,7 +184,6 @@ describe('Instantiate a service', function(){
         return promise.should.be.fulfilled;
       });
     });
-
 
   });
 

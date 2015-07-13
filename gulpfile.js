@@ -1,22 +1,40 @@
-var gulp = require("gulp");
-var babel = require("gulp-babel");
-var mocha = require('gulp-mocha');
-var eslint = require('gulp-eslint');
-gulp.task("default", function () {
-  return gulp.src("lib/**/*.js")
+var gulp   = require('gulp')
+  , babel  = require('gulp-babel')
+  , mocha  = require('gulp-mocha')
+  , eslint = require('gulp-eslint')
+  , babelr = require('babel/register');
+
+gulp.task('default', ['watch']);
+
+
+/**
+ * Compile es6 into es5
+ */
+gulp.task('build', function () {
+  return gulp.src('src/**/*.js')
     .pipe(babel())
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest('lib'));
 });
+
 
 gulp.task('mocha',  function(){
-  return gulp.src("test/*.js")
-    .pipe(mocha());
+  return gulp.src('test/*.js')
+    .pipe(mocha({
+        compilers: { js: babelr }
+    }));
 });
 
-gulp.task("test", ['default', 'mocha']);
+gulp.task('test', ['build', 'mocha']);
 
+/**
+ * Watch lib & test files an on change
+ * lint, build and run mocha
+ */
 gulp.task('watch', function() {
-    gulp.watch(['lib/**', 'test/**'], ['lint', 'test']);
+  var tasks = ['lint', 'test'];
+
+  gulp.start(tasks);
+  gulp.watch(['src/**', 'test/**'], tasks);
 });
 
 
@@ -32,6 +50,3 @@ gulp.task('lint', function () {
     // lint error, return the stream and pipe to failOnError last.
     .pipe(eslint.failOnError());
 });
-
-
-

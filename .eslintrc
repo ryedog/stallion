@@ -21,9 +21,11 @@
   "rules": {
     "quotes": [2, "single", "avoid-escape"],
     "no-multi-spaces": [1, { exceptions: {
-      "AssignmentExpression": true, 
+      "AssignmentExpression": true,
       "VariableDeclarator": true
     }}],
-    "curly": [2, "multi"]
+    "curly": [2, "multi"],
+    "camelcase": 0,
+    "no-use-before-define": [2, "nofunc"]
   }
 }

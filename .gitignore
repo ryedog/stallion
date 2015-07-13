@@ -5,10 +5,10 @@ npm-debug.log
 # Build
 lib
 
-# OSX 
+# OSX
 .tmp
 .DS_Store
 
 # Sublime
 *.sublime-*
-sftp-config.jsond
+sftp-config.json

@@ -1,10 +1,11 @@
 {
   "name": "stallion",
-  "version": "0.4.0",
-  "description": "Simple way to create clients for your REST based services",
-  "main": "index.js",
+  "version": "0.4.2",
+  "description": "Simple way to create clients for your REST based services in Node",
+  "main": "lib/stallion.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register"
+    "prepublish": "gulp build",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,9 @@
   "keywords": [
     "rest",
     "client",
-    "api"
+    "api",
+    "wrapper",
+    "service"
   ],
   "author": "Ryan Hubbard <ryanmhubbard@gmail.com>",
   "license": "MIT",
