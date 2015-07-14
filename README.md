@@ -1,5 +1,5 @@
 # Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]()
-> Simple, lightweight way to create Node clients for REST services
+> Simple, lightweight way to create promise based Node clients for REST services
 
 Would love some feedback, including how to make the README better. Drop me an email, or create an issue or PR.
 
@@ -62,7 +62,6 @@ This will create the following methods for Task on the service:
 * createTask
 * updateTask
 * getTask
-* getTasks
 * deleteTask
 * startTask
 
@@ -74,7 +73,7 @@ Stallion builds in the common calls REST services for resources: Create, Read, U
 * Shortcut declaration
 ```javascript
 {
-  User: 'crud'
+  User: 'crudpl'
 }
 ```
 
@@ -82,7 +81,7 @@ Stallion builds in the common calls REST services for resources: Create, Read, U
 ```javascript
 {
   User: {
-    actions: 'crud'
+    actions: 'crudpl'
   }
 }
 ```
@@ -92,8 +91,8 @@ There are 5 actions that are available:
 * `c` Create: adds a `create<Object>(data)` method which POST's the data to /:objects
 * `r` Read: adds a `get<Object>(id)` method which GET's to /:objects/:id
 * `u` Update: adds `update<Object>(data)` method which PUT's the param to the service /:objects/:data.id
-* `p` Patch: adds `patch<Object>(data)` method which PATCH's the param to the service /:objects/:data.id
 * `d` Delete: adds `delete<Object>(id)` method which DELETE's to /:objects/:id
+* `p` Patch: adds `patch<Object>(data)` method which PATCH's the param to the service /:objects/:data.id
 * `l` List: adds a `get<Objects>(query)` method (notice it's plural) which GET's to /:objects but the query object will be translated to a query string
 
 ## Custom methods
