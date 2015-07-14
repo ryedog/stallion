@@ -17,6 +17,12 @@ Licensed under the MIT-LICENSE
 ## Installing
 `npm install stallion --save`
 
+## Testing
+`npm test` or `gulp test`
+
+You can use `gulp watch` which will run tests on file changes
+
+
 ## Creating a client
 
 Creating a client is simple. Just delcare the objects

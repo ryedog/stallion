@@ -1,3 +1,9 @@
+# Build & Test files
 src
 test
+.eslintrc
+gulpfile.js
+
+# Sublime
+*.sublime-*
 sftp-config.json
