@@ -24,7 +24,6 @@ var actionsMap = {
   delete: 'del'
 };
 
-
 class Stallion {
 
 
@@ -35,21 +34,32 @@ class Stallion {
    */
   constructor(config) {
 
-    // Configure Restler
-    var restler_config = {
-      baseURL: config.baseUrl
-    };
-
     // Create the restler API
     var api = this.buildApi(config);
 
-    var service = restler.service(default_init, restler_config, api);
-        service.api = Object.keys(api);
-        service.resources = this.objectsToResources(config);
-    // TODO: this right
-        //service.resources = objects.map(x => { return x.toLowerCase() });
 
-    return service;
+
+    // Can't use multilple instances of Reslter services
+    //
+    // Because each instance shares the defaults and the only way to set
+    // the username & password is to use the defaults each instance will
+    // actually be the same
+    //
+    // So instead when we create another instance of a Stallion service
+    // we'll actually create a seperate instance of a Restler service
+    var OurService = function(username, password) {
+      var restler_defaults = { baseURL: config.baseUrl };
+      var RestlerService = restler.service(default_init, restler_defaults, api);
+
+      return new RestlerService(username, password);
+    };
+
+    OurService.api = Object.keys(api);
+    OurService.resources = this.objectsToResources(config);
+        // TODO: this right
+        //OurService.resources = objects.map(x => { return x.toLowerCase() });
+
+    return OurService;
   }
 
 

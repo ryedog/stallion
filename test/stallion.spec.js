@@ -72,6 +72,24 @@ describe('Instantiate a service', function(){
     Service.resources.should.include.members(['users', 'companies', 'tasks']);
   });
 
+  describe('When creating multiples instances of a service', function() {
+    var client2;
+    var other_user = 'different_username';
+
+    before(function() {
+      client2 = new Service(other_user, pass);
+    });
+
+    // Restler's service will share the username/password across multiple
+    // instances so we need to create a new service for each instance
+    // of a service we want to create
+    it('each service has their own username & password', function() {
+      client.defaults.username.should.eq(user);
+      client2.defaults.username.should.eq(other_user);
+    });
+  });
+
+
   describe('When using object shortcut declaration', function() {
 
     it('Creates all CRUD methods when shortcut declaration is "crudpl"', function() {
