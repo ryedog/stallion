@@ -128,3 +128,4 @@ This will create a `convertLead(id)` method on the service. The provided functio
 9. Expose request & response objects
 10. Add option to create 'client.createResource' vs 'client.resource.create'
 11. Wrap Rester's default action method (post, get, etc) to make it easier to send the body & query params
+12. Upsert mode - Some API's use POST for create & update. In this case for all updates you need to create a custom update function so would be nice to have way to handle this automatically (1. All updates, 2. single resources)
