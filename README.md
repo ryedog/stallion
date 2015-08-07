@@ -1,4 +1,5 @@
-# Stallion [![Build](https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg)]()
+# Stallion # Stallion [![Build][build-img]][build-url] [![NPM Downloads][downloads-img]][downloads-url]
+
 > Simple, lightweight way to create promise based Node clients for REST services
 
 Would love some feedback, including how to make the README better. Drop me an email, or create an issue or PR.
@@ -129,3 +130,10 @@ This will create a `convertLead(id)` method on the service. The provided functio
 10. Add option to create 'client.createResource' vs 'client.resource.create'
 11. Wrap Rester's default action method (post, get, etc) to make it easier to send the body & query params
 12. Upsert mode - Some API's use POST for create & update. In this case for all updates you need to create a custom update function so would be nice to have way to handle this automatically (1. All updates, 2. single resources)
+13. 
+
+
+[build-img]: https://img.shields.io/codeship/faaed070-00df-0133-d340-46d3771abf46.svg
+[build-url]: https://codeship.com/projects/88477
+[downloads-img]: http://img.shields.io/npm/dm/stallion.svg
+[downloads-url]: https://www.npmjs.com/package/stallion
