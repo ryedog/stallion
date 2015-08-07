@@ -1,4 +1,4 @@
-# Stallion # Stallion [![Build][build-img]][build-url] [![NPM Downloads][downloads-img]][downloads-url]
+# Stallion [![Build][build-img]][build-url] [![NPM Downloads][downloads-img]][downloads-url]
 
 > Simple, lightweight way to create promise based Node clients for REST services
 
